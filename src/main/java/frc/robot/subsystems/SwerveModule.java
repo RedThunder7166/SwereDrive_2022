@@ -23,7 +23,7 @@ public class SwerveModule extends SubsystemBase {
   private final TalonFX m_turningMotor;
 
   private final CANCoder m_turnEncoder;
-  // Driving encoder uses the motor port.
+  // Driving encoder uses the integrated FX encoder
   // e.g. testMotor.getSelectedSensorPosition();
 
   private final PIDController m_drivePIDController = 
