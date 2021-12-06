@@ -44,7 +44,6 @@ public class SwerveModule extends SubsystemBase {
   public SwerveModule(
       int driveMotorChannel,
       int turningMotorChannel,
-      int driveEncoderPorts,
       int turningEncoderPorts) {
     
     // Initialize the motors
@@ -53,7 +52,7 @@ public class SwerveModule extends SubsystemBase {
     
     // Configure the encoders for both motors
     m_driveMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 1, 0);
-    this.m_turnEncoder = new CANCoder(driveEncoderPorts);
+    this.m_turnEncoder = new CANCoder(turningEncoderPorts);
   }
 
   //Returns the current state of the module

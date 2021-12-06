@@ -31,7 +31,6 @@ public final class Constants {
         public static final int kFrontRightTurningMotorPort = 5;
         public static final int kRearRightTurningMotorPort = 7;
     
-        //Steering gear ratio is 12.8:1 from MK4 website
         public static final int kFrontLeftTurningEncoderPorts = 9; 
         public static final int kRearLeftTurningEncoderPorts = 11;
         public static final int kFrontRightTurningEncoderPorts = 13;
@@ -42,19 +41,21 @@ public final class Constants {
         public static final boolean kFrontRightTurningEncoderReversed = false;
         public static final boolean kRearRightTurningEncoderReversed = true;
     
-        public static final int kFrontLeftDriveEncoderPorts = 8;
-        public static final int kRearLeftDriveEncoderPorts = 10;
-        public static final int kFrontRightDriveEncoderPorts = 12;
-        public static final int kRearRightDriveEncoderPorts = 14;
+        // Drive Encoder ports should be the same as the drive motors.  Code kept for comparison to WPI example
+
+        // public static final int kFrontLeftDriveEncoderPorts = 8;
+        // public static final int kRearLeftDriveEncoderPorts = 10;
+        // public static final int kFrontRightDriveEncoderPorts = 12;
+        // public static final int kRearRightDriveEncoderPorts = 14;
     
         public static final boolean kFrontLeftDriveEncoderReversed = false;
         public static final boolean kRearLeftDriveEncoderReversed = true;
         public static final boolean kFrontRightDriveEncoderReversed = false;
         public static final boolean kRearRightDriveEncoderReversed = true;
     
-        public static final double kTrackWidth = 0.5;
+        public static final double kTrackWidth = 0.762; // meters
         // Distance between centers of right and left wheels on robot
-        public static final double kWheelBase = 0.7;
+        public static final double kWheelBase = 0.762; // meters
         // Distance between front and back wheels on robot
         public static final SwerveDriveKinematics kDriveKinematics =
             new SwerveDriveKinematics(
@@ -90,13 +91,16 @@ public final class Constants {
         public static final double kWheelDiameterMeters = 0.1016; // 4 inches
         public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI; // C = D * pi
         public static final double kDrivetoMetersPerSecond = 10 * (kWheelCircumferenceMeters/kDriveGearRatio);
-        public static final double kDriveEncoderDistancePerPulse =
-            // Assumes the encoders are directly mounted on the wheel shafts
-            (kWheelDiameterMeters * Math.PI) / (double) kDriveCANcoderCPR;
+
+        // Unused in our code
+
+        // public static final double kDriveEncoderDistancePerPulse =
+        //     // Assumes the encoders are directly mounted on the wheel shafts
+        //     (kWheelDiameterMeters * Math.PI) / (double) kDriveCANcoderCPR;
     
-        public static final double kTurningEncoderDistancePerPulse =
-            // Assumes the encoders are on a 1:1 reduction with the module shaft.
-            (2 * Math.PI) / (double) kTurningFalconEncoderCPR;
+        // public static final double kTurningEncoderDistancePerPulse =
+        //     // Assumes the encoders are on a 1:1 reduction with the module shaft.
+        //     (2 * Math.PI) / (double) kTurningFalconEncoderCPR;
     
         public static final double kPModuleTurningController = 1;
     
