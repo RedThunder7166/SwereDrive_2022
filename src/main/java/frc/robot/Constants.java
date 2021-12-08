@@ -53,9 +53,9 @@ public final class Constants {
         public static final boolean kFrontRightDriveEncoderReversed = false;
         public static final boolean kRearRightDriveEncoderReversed = true;
     
-        public static final double kTrackWidth = 0.762; // meters
+        public static final double kTrackWidth = 0.5969; // meters
         // Distance between centers of right and left wheels on robot
-        public static final double kWheelBase = 0.762; // meters
+        public static final double kWheelBase = 0.5969; // meters
         // Distance between front and back wheels on robot
         public static final SwerveDriveKinematics kDriveKinematics =
             new SwerveDriveKinematics(
@@ -71,9 +71,9 @@ public final class Constants {
         // for *your* robot's drive.
         // The RobotPy Characterization Toolsuite provides a convenient tool for obtaining these
         // values for your robot.
-        public static final double ksVolts = 1;
-        public static final double kvVoltSecondsPerMeter = 0.8;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.15;
+        public static final double ksVolts = 0.509;
+        public static final double kvVoltSecondsPerMeter = 2.73;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.124;
         public static final double kMaxSpeedMetersPerSecond = 3;
       }
     
