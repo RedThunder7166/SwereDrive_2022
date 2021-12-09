@@ -51,7 +51,7 @@ public class SwerveModule extends SubsystemBase {
     m_turningMotor = new TalonFX(turningMotorChannel);
     
     // Configure the encoders for both motors
-    m_driveMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 1, 0);
+    m_driveMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
     this.m_turnEncoder = new CANCoder(turningEncoderPorts);
   }
 
