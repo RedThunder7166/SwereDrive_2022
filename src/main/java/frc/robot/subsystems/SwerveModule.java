@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ModuleConstants;
@@ -44,15 +45,19 @@ public class SwerveModule extends SubsystemBase {
   public SwerveModule(
       int driveMotorChannel,
       int turningMotorChannel,
-      int turningEncoderPorts) {
+      int turningEncoderPorts,
+      double angleZero) {
     
     // Initialize the motors
     m_driveMotor = new TalonFX(driveMotorChannel);
     m_turningMotor = new TalonFX(turningMotorChannel);
+
     
     // Configure the encoders for both motors
     m_driveMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
     this.m_turnEncoder = new CANCoder(turningEncoderPorts);
+    this.m_turnEncoder.configMagnetOffset(-angleZero);
+
   }
 
   //Returns the current state of the module
@@ -74,6 +79,9 @@ public class SwerveModule extends SubsystemBase {
 
     double m_turningRadians =  
       ModuleConstants.kTurningPositiontoRadians * m_turnEncoder.getPosition();
+
+    SmartDashboard.putNumber("Turning State", m_turningRadians);
+    SmartDashboard.putNumber("Speed State", m_speedMetersPerSecond);
 
     //Optimize the reference state to avoid spinning further than 90 degrees
     SwerveModuleState state = 

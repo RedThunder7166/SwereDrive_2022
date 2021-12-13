@@ -8,7 +8,6 @@ import java.util.List;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -52,9 +51,9 @@ public class RobotContainer {
       new RunCommand(
         () -> 
           m_robotDrive.drive(
-            m_driverController.getY(Hand.kLeft), 
-            m_driverController.getX(Hand.kRight), 
-            m_driverController.getX(Hand.kLeft), 
+            m_driverController.getY(GenericHID.Hand.kLeft), 
+            m_driverController.getX(GenericHID.Hand.kRight), 
+            m_driverController.getX(GenericHID.Hand.kLeft), 
             false),
             
         m_robotDrive));

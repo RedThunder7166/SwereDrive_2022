@@ -35,6 +35,11 @@ public final class Constants {
         public static final int kRearLeftTurningEncoderPorts = 11;
         public static final int kFrontRightTurningEncoderPorts = 13;
         public static final int kRearRightTurningEncoderPorts = 15;
+
+        public static final int kFrontLeftAngleZero = 0; // FIXME: Add angle offset
+        public static final int kRearLeftAngleZero = 0; // FIXME: Add angle offset
+        public static final int kFrontRightAngleZero = 0; // FIXME: Add angle offset
+        public static final int kRearRightAngleZero = 0; // FIXME: Add angle offset
     
         public static final boolean kFrontLeftTurningEncoderReversed = false;
         public static final boolean kRearLeftTurningEncoderReversed = true;
@@ -102,9 +107,9 @@ public final class Constants {
         //     // Assumes the encoders are on a 1:1 reduction with the module shaft.
         //     (2 * Math.PI) / (double) kTurningFalconEncoderCPR;
     
-        public static final double kPModuleTurningController = .1;
+        public static final double kPModuleTurningController = .02;
     
-        public static final double kPModuleDriveController = .1;
+        public static final double kPModuleDriveController = .02;
       }
     
       public static final class OIConstants {

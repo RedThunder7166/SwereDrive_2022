@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
@@ -27,25 +28,29 @@ public class DriveSubsystem extends SubsystemBase {
     new SwerveModule(
       DriveConstants.kFrontLeftDriveMotorPort,
       DriveConstants.kFrontLeftTurningMotorPort,
-      DriveConstants.kFrontLeftTurningEncoderPorts);
+      DriveConstants.kFrontLeftTurningEncoderPorts,
+      DriveConstants.kFrontLeftAngleZero);
 
   private final SwerveModule m_rearLeft =
     new SwerveModule(
       DriveConstants.kRearLeftDriveMotorPort, 
       DriveConstants.kRearLeftTurningMotorPort, 
-      DriveConstants.kRearLeftTurningEncoderPorts);
+      DriveConstants.kRearLeftTurningEncoderPorts,
+      DriveConstants.kRearLeftAngleZero);
 
   private final SwerveModule m_frontRight = 
     new SwerveModule(
       DriveConstants.kFrontRightDriveMotorPort, 
       DriveConstants.kFrontRightTurningMotorPort, 
-      DriveConstants.kFrontRightTurningEncoderPorts);
+      DriveConstants.kFrontRightTurningEncoderPorts,
+      DriveConstants.kFrontRightAngleZero);
 
   private final SwerveModule m_rearRight = 
     new SwerveModule(
       DriveConstants.kRearRightDriveMotorPort, 
       DriveConstants.kRearRightTurningMotorPort, 
-      DriveConstants.kRearRightTurningEncoderPorts);
+      DriveConstants.kRearRightTurningEncoderPorts,
+      DriveConstants.kRearRightAngleZero);
 
   // Initializing the gyro sensor
   private final Gyro m_gyro = new ADXRS450_Gyro();
@@ -100,6 +105,9 @@ public class DriveSubsystem extends SubsystemBase {
     m_frontRight.setDesiredState(swerveModuleStates[1]);
     m_rearLeft.setDesiredState(swerveModuleStates[2]);
     m_rearRight.setDesiredState(swerveModuleStates[3]); 
+    SmartDashboard.putNumber("drive xSpeed", xSpeed);
+    SmartDashboard.putNumber("drive ySpeed", ySpeed);
+    SmartDashboard.putNumber("drive rot", rot);
   }
 
     /**
