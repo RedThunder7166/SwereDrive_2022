@@ -36,10 +36,10 @@ public final class Constants {
         public static final int kFrontRightTurningEncoderPorts = 13;
         public static final int kRearRightTurningEncoderPorts = 15;
 
-        public static final int kFrontLeftAngleZero = 0; // FIXME: Add angle offset
-        public static final int kRearLeftAngleZero = 0; // FIXME: Add angle offset
-        public static final int kFrontRightAngleZero = 0; // FIXME: Add angle offset
-        public static final int kRearRightAngleZero = 0; // FIXME: Add angle offset
+        public static final double kFrontLeftAngleZero = 353.1; // FIXME: Add angle offset
+        public static final double kRearLeftAngleZero = 78.8; // FIXME: Add angle offset
+        public static final double kFrontRightAngleZero = 331.6; // FIXME: Add angle offset
+        public static final double kRearRightAngleZero = 323.7; // FIXME: Add angle offset
     
         public static final boolean kFrontLeftTurningEncoderReversed = false;
         public static final boolean kRearLeftTurningEncoderReversed = true;
@@ -107,9 +107,9 @@ public final class Constants {
         //     // Assumes the encoders are on a 1:1 reduction with the module shaft.
         //     (2 * Math.PI) / (double) kTurningFalconEncoderCPR;
     
-        public static final double kPModuleTurningController = .02;
+        public static final double kPModuleTurningController = .2;
     
-        public static final double kPModuleDriveController = .02;
+        public static final double kPModuleDriveController = .2;
       }
     
       public static final class OIConstants {
@@ -122,9 +122,9 @@ public final class Constants {
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
     
-        public static final double kPXController = 1;
-        public static final double kPYController = 1;
-        public static final double kPThetaController = 1;
+        public static final double kPXController = .2;
+        public static final double kPYController = .2;
+        public static final double kPThetaController = .2;
     
         // Constraint for the motion profilied robot angle controller
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =

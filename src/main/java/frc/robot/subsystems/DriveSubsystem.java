@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
@@ -11,18 +12,35 @@ import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
 public class DriveSubsystem extends SubsystemBase {
 
+  private ShuffleboardTab swerveTab = Shuffleboard.getTab("SDS Swerve");
 
-  // public SwerveModule(
-  //     int driveMotorChannel,
-  //     int turningMotorChannel,
-  //     int driveEncoderPorts,
-  //     int turningEncoderPorts)
+  private NetworkTableEntry xSpeedEntry = 
+  swerveTab.add("xSpeed", 0)
+          .getEntry();
+
+  private NetworkTableEntry ySpeedEntry = 
+  swerveTab.add("ySpeed", 0)
+          .getEntry();
+
+  private NetworkTableEntry rotEntry = 
+  swerveTab.add("rot", 0)
+          .getEntry();
+
+  private NetworkTableEntry frontLeftStateEntry =
+  swerveTab.add("frontLeft Velocity", 0)
+          .getEntry();
+  
+  private NetworkTableEntry frontRightStateEntry =
+  swerveTab.add("frontRight Velocity", 0)
+          .getEntry();
 
   private final SwerveModule m_frontLeft = 
     new SwerveModule(
@@ -62,10 +80,12 @@ public class DriveSubsystem extends SubsystemBase {
     /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {}
 
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     // Update the odometry in the periodic block
+
     m_odometry.update(
       m_gyro.getRotation2d(),
       m_frontLeft.getState(),
@@ -101,13 +121,20 @@ public class DriveSubsystem extends SubsystemBase {
           : new ChassisSpeeds(xSpeed, ySpeed, rot));
     SwerveDriveKinematics.normalizeWheelSpeeds(
       swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSecond);
+
     m_frontLeft.setDesiredState(swerveModuleStates[0]);
     m_frontRight.setDesiredState(swerveModuleStates[1]);
     m_rearLeft.setDesiredState(swerveModuleStates[2]);
     m_rearRight.setDesiredState(swerveModuleStates[3]); 
-    SmartDashboard.putNumber("drive xSpeed", xSpeed);
-    SmartDashboard.putNumber("drive ySpeed", ySpeed);
-    SmartDashboard.putNumber("drive rot", rot);
+
+
+    xSpeedEntry.setDouble(xSpeed);
+    ySpeedEntry.setDouble(ySpeed);
+    rotEntry.setDouble(rot);
+    frontLeftStateEntry.setDouble(swerveModuleStates[0].speedMetersPerSecond);
+    frontRightStateEntry.setDouble(swerveModuleStates[1].speedMetersPerSecond);
+    
+
   }
 
     /**

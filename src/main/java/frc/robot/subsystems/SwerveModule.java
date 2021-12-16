@@ -4,29 +4,28 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
-
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ModuleConstants;
 
 public class SwerveModule extends SubsystemBase {
 
-  private final TalonFX m_driveMotor;
-  private final TalonFX m_turningMotor;
+  private final WPI_TalonFX m_driveMotor;
+  private final WPI_TalonFX m_turningMotor;
 
   private final CANCoder m_turnEncoder;
   // Driving encoder uses the integrated FX encoder
   // e.g. testMotor.getSelectedSensorPosition();
 
+  // PID controller for velocity. DO NOT SET kD.  It is redundant as setVoltage() already controls this
   private final PIDController m_drivePIDController = 
     new PIDController(ModuleConstants.kPModuleDriveController, 0, 0);
   
@@ -49,8 +48,8 @@ public class SwerveModule extends SubsystemBase {
       double angleZero) {
     
     // Initialize the motors
-    m_driveMotor = new TalonFX(driveMotorChannel);
-    m_turningMotor = new TalonFX(turningMotorChannel);
+    m_driveMotor = new WPI_TalonFX(driveMotorChannel);
+    m_turningMotor = new WPI_TalonFX(turningMotorChannel);
 
     
     // Configure the encoders for both motors
@@ -80,9 +79,6 @@ public class SwerveModule extends SubsystemBase {
     double m_turningRadians =  
       ModuleConstants.kTurningPositiontoRadians * m_turnEncoder.getPosition();
 
-    SmartDashboard.putNumber("Turning State", m_turningRadians);
-    SmartDashboard.putNumber("Speed State", m_speedMetersPerSecond);
-
     //Optimize the reference state to avoid spinning further than 90 degrees
     SwerveModuleState state = 
       SwerveModuleState.optimize(desiredState, new Rotation2d(m_turningRadians));
@@ -95,8 +91,8 @@ public class SwerveModule extends SubsystemBase {
       m_turningPidController.calculate(m_turningRadians, state.angle.getRadians());
 
     // Calculate the turning motor output from the turning PID controller
-    m_driveMotor.set(ControlMode.PercentOutput, driveOutput);
-    m_turningMotor.set(ControlMode.PercentOutput, turnOutput);
+    m_driveMotor.setVoltage(driveOutput);  
+    m_turningMotor.setVoltage(turnOutput);
   }
 
   public void resetEncoders() {
