@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
@@ -40,6 +39,10 @@ public class DriveSubsystem extends SubsystemBase {
   
   private NetworkTableEntry frontRightStateEntry =
   swerveTab.add("frontRight Velocity", 0)
+          .getEntry();
+
+  private NetworkTableEntry gyroEntry =
+  swerveTab.add("Gyro Heading", 0)
           .getEntry();
 
   private final SwerveModule m_frontLeft = 
@@ -85,6 +88,8 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     // Update the odometry in the periodic block
+
+    gyroEntry.setDouble(m_gyro.getAngle());
 
     m_odometry.update(
       m_gyro.getRotation2d(),
@@ -133,7 +138,7 @@ public class DriveSubsystem extends SubsystemBase {
     rotEntry.setDouble(rot);
     frontLeftStateEntry.setDouble(swerveModuleStates[0].speedMetersPerSecond);
     frontRightStateEntry.setDouble(swerveModuleStates[1].speedMetersPerSecond);
-    
+
 
   }
 
