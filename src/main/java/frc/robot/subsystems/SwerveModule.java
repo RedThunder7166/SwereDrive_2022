@@ -20,8 +20,8 @@ import frc.robot.Constants.ModuleConstants;
 
 public class SwerveModule extends SubsystemBase {
 
-  private final TalonFX m_driveMotor;
-  private final TalonFX m_turningMotor;
+  private final WPI_TalonFX m_driveMotor;
+  private final WPI_TalonFX m_turningMotor;
 
   private final CANCoder m_turnEncoder;
   // Driving encoder uses the integrated FX encoder
@@ -50,8 +50,8 @@ public class SwerveModule extends SubsystemBase {
       double angleZero) {
     
     // Initialize the motors
-    m_driveMotor = new TalonFX(driveMotorChannel);
-    m_turningMotor = new TalonFX(turningMotorChannel);
+    m_driveMotor = new WPI_TalonFX(driveMotorChannel);
+    m_turningMotor = new WPI_TalonFX(turningMotorChannel);
 
     
     // Configure the encoders for both motors
@@ -68,7 +68,7 @@ public class SwerveModule extends SubsystemBase {
       ModuleConstants.kDrivetoMetersPerSecond * m_driveMotor.getSelectedSensorVelocity();
 
     double m_turningRadians =  
-      ((2*Math.pi)/360) * m_turnEncoder.getPosition();
+      ((2*Math.PI)/360) * m_turnEncoder.getPosition();
 
     return new SwerveModuleState(m_speedMetersPerSecond, new Rotation2d(m_turningRadians));
   }
@@ -79,6 +79,7 @@ public class SwerveModule extends SubsystemBase {
       ModuleConstants.kDrivetoMetersPerSecond * m_driveMotor.getSelectedSensorVelocity();
     
     SmartDashboard.putNumber("m_speedMetersPerSecond", m_speedMetersPerSecond);
+    SmartDashboard.putNumber("Falcon SelectedSensorVelocity", m_driveMotor.getSelectedSensorVelocity());
 
     double m_turningRadians =  
       ((2*Math.PI)/360) * m_turnEncoder.getPosition();
@@ -98,11 +99,11 @@ public class SwerveModule extends SubsystemBase {
       m_turningPidController.calculate(m_turningRadians, state.angle.getRadians());
 
     // Calculate the turning motor output from the turning PID controller
-    m_driveMotor.set(ControlMode.PercentOutput, 0);  
-    m_turningMotor.set(ControlMode.PercentOutput, 0);
+    m_driveMotor.setVoltage(driveOutput); 
+    m_turningMotor.setVoltage(turnOutput);
 
-    SmartDashboard.putNumber("driveOutput", driveOutput/12);
-    SmartDashboard.putNumber("turnOutput", turnOutput/12);
+    SmartDashboard.putNumber("driveOutput", driveOutput);
+    SmartDashboard.putNumber("turnOutput", turnOutput);
   }
 
   public void resetEncoders() {

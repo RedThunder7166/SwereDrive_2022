@@ -51,9 +51,12 @@ public class RobotContainer {
       new RunCommand(
         () -> 
           m_robotDrive.drive(
-            m_driverController.getX(GenericHID.Hand.kLeft), 
-            m_driverController.getY(GenericHID.Hand.kLeft), 
-            m_driverController.getX(GenericHID.Hand.kRight), 
+            m_driverController.getX(GenericHID.Hand.kLeft)
+            * DriveConstants.kMaxSpeedMetersPerSecond, 
+            m_driverController.getY(GenericHID.Hand.kLeft)
+            * DriveConstants.kMaxSpeedMetersPerSecond, 
+            m_driverController.getX(GenericHID.Hand.kRight)
+            * DriveConstants.kMaxSpeedMetersPerSecond, 
             false),
             
         m_robotDrive));

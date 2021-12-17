@@ -77,8 +77,8 @@ public final class Constants {
         // The RobotPy Characterization Toolsuite provides a convenient tool for obtaining these
         // values for your robot.
         public static final double ksVolts = 0.509;
-        public static final double kvVoltSecondsPerMeter = 0.458; //2.73;
-        public static final double kaVoltSecondsSquaredPerMeter = .05; //0.124;
+        public static final double kvVoltSecondsPerMeter = 2.73;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.124;
         public static final double kMaxSpeedMetersPerSecond = 3;
       }
     
@@ -94,7 +94,7 @@ public final class Constants {
         public static final int kTurningCANcoderCPR = 4096;
         public static final double kWheelDiameterMeters = 0.1016; // 4 inches
         public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI; // C = D * pi
-        public static final double kDrivetoMetersPerSecond = 10 * (kWheelCircumferenceMeters/kDriveGearRatio);
+        public static final double kDrivetoMetersPerSecond = (10 * kWheelCircumferenceMeters)/(kDriveGearRatio * 2048);
 
         // Unused in our code
 
@@ -106,9 +106,9 @@ public final class Constants {
         //     // Assumes the encoders are on a 1:1 reduction with the module shaft.
         //     (2 * Math.PI) / (double) kTurningFalconEncoderCPR;
     
-        public static final double kPModuleTurningController = .2;
+        public static final double kPModuleTurningController = .6;
     
-        public static final double kPModuleDriveController = .2;
+        public static final double kPModuleDriveController = .6;
       }
     
       public static final class OIConstants {
