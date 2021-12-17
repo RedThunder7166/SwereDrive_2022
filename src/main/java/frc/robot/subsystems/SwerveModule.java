@@ -9,16 +9,22 @@ import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
+
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ModuleConstants;
 
 public class SwerveModule extends SubsystemBase {
+
+
 
   private final WPI_TalonFX m_driveMotor;
   private final WPI_TalonFX m_turningMotor;
@@ -102,8 +108,9 @@ public class SwerveModule extends SubsystemBase {
     m_driveMotor.setVoltage(driveOutput); 
     m_turningMotor.setVoltage(turnOutput);
 
-    SmartDashboard.putNumber("driveOutput", driveOutput);
-    SmartDashboard.putNumber("turnOutput", turnOutput);
+    SmartDashboard.putNumber("PID driveOutput", driveOutput);
+    SmartDashboard.putNumber("PID turnOutput", turnOutput);
+
   }
 
   public void resetEncoders() {
