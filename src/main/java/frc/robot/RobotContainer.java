@@ -32,10 +32,14 @@ import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+
+  // The first argument is the root container
+  // The second argument is whether logging and config should be given separate tabs
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -57,9 +61,10 @@ public class RobotContainer {
             * DriveConstants.kMaxSpeedMetersPerSecond, 
             m_driverController.getX(GenericHID.Hand.kRight) // rot
             * DriveConstants.kMaxAngularSpeedRadiansPerSecond, 
-            false),
+            true),
             
         m_robotDrive));
+
     
   }
 

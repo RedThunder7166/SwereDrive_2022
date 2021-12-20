@@ -22,23 +22,23 @@ public class DriveSubsystem extends SubsystemBase {
   private ShuffleboardTab swerveTab = Shuffleboard.getTab("SDS Swerve");
 
   private NetworkTableEntry xSpeedEntry = 
-  swerveTab.add("xSpeed", 0)
+  swerveTab.add("xBox xSpeed", 0)
           .getEntry();
 
   private NetworkTableEntry ySpeedEntry = 
-  swerveTab.add("ySpeed", 0)
+  swerveTab.add("xBox ySpeed", 0)
           .getEntry();
 
   private NetworkTableEntry rotEntry = 
-  swerveTab.add("rot", 0)
+  swerveTab.add("xBox rot", 0)
           .getEntry();
 
   private NetworkTableEntry frontLeftStateEntry =
-  swerveTab.add("frontLeft Velocity", 0)
+  swerveTab.add("FL State v", 0)
           .getEntry();
   
   private NetworkTableEntry frontRightStateEntry =
-  swerveTab.add("frontRight Velocity", 0)
+  swerveTab.add("FR State v", 0)
           .getEntry();
 
   private NetworkTableEntry gyroEntry =
@@ -132,7 +132,7 @@ public class DriveSubsystem extends SubsystemBase {
     m_rearLeft.setDesiredState(swerveModuleStates[2]);
     m_rearRight.setDesiredState(swerveModuleStates[3]); 
 
-
+    // Telemetry
     xSpeedEntry.setDouble(xSpeed);
     ySpeedEntry.setDouble(ySpeed);
     rotEntry.setDouble(rot);

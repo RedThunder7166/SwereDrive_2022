@@ -92,6 +92,8 @@ public class SwerveModule extends SubsystemBase {
     SwerveModuleState state = 
       SwerveModuleState.optimize(desiredState, new Rotation2d(m_turningRadians));
 
+    SmartDashboard.putNumber("desiredState", desiredState.speedMetersPerSecond);
+
     //Calculate the drive output from the drive PID controller
     final double driveOutput =
       m_drivePIDController.calculate(m_speedMetersPerSecond, state.speedMetersPerSecond);
@@ -105,6 +107,8 @@ public class SwerveModule extends SubsystemBase {
 
     SmartDashboard.putNumber("PID driveOutput", driveOutput);
     SmartDashboard.putNumber("PID turnOutput", turnOutput);
+
+
 
   }
 
