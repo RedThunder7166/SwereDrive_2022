@@ -23,6 +23,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import edu.wpi.first.wpilibj2.command.button.Button;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -55,11 +56,11 @@ public class RobotContainer {
       new RunCommand(
         () -> 
           m_robotDrive.drive(
-            m_driverController.getX(GenericHID.Hand.kLeft) // xAxis
-            * DriveConstants.kMaxSpeedMetersPerSecond, 
-            m_driverController.getY(GenericHID.Hand.kLeft) // yAxis
-            * DriveConstants.kMaxSpeedMetersPerSecond, 
-            m_driverController.getX(GenericHID.Hand.kRight) // rot
+            modifyAxis(m_driverController.getY(GenericHID.Hand.kLeft)) // xAxis
+            * DriveConstants.kMaxSpeedMetersPerSecond * -1, 
+            modifyAxis(m_driverController.getX(GenericHID.Hand.kLeft)) // yAxis
+            * DriveConstants.kMaxSpeedMetersPerSecond * -1, 
+            modifyAxis(m_driverController.getX(GenericHID.Hand.kRight)) // rot
             * DriveConstants.kMaxAngularSpeedRadiansPerSecond, 
             true),
             
@@ -74,7 +75,12 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+        // Back button zeros the gyroscope
+        new Button(m_driverController::getBackButton)
+        // No requirements because we don't need to interrupt anything
+        .whenPressed(m_robotDrive::zeroHeading);
+  }
 
 
 
@@ -131,4 +137,28 @@ public class RobotContainer {
       
     return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));
   }
+
+  private static double deadband(double value, double deadband) {
+    if (Math.abs(value) > deadband) {
+      if (value > 0.0) {
+        return (value - deadband) / (1.0 - deadband);
+      } else {
+        return (value + deadband) / (1.0 - deadband);
+      }
+    } else {
+      return 0.0;
+    }
+  }
+
+  private static double modifyAxis(double value) {
+    // Deadband
+    value = deadband(value, 0.05);
+
+    // Square the axis
+    value = Math.copySign(value * value, value);
+
+    return value;
+  }
 }
+
+
