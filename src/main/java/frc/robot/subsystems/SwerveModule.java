@@ -92,7 +92,7 @@ public class SwerveModule extends SubsystemBase {
       ModuleConstants.kDrivetoMetersPerSecond * m_driveMotor.getSelectedSensorVelocity();
 
     double m_turningRadians =  
-      ((2*Math.PI)/360) * m_turnEncoder.getPosition();
+      ((2*Math.PI)/360) * m_turnEncoder.getAbsolutePosition();
 
     return new SwerveModuleState(m_speedMetersPerSecond, new Rotation2d(m_turningRadians));
   }
@@ -106,10 +106,10 @@ public class SwerveModule extends SubsystemBase {
     SmartDashboard.putNumber("Falcon SelectedSensorVelocity", m_driveMotor.getSelectedSensorVelocity());
 
     double m_turningRadians =  
-      ((2*Math.PI)/360) * m_turnEncoder.getPosition();
+      ((2*Math.PI)/360) * m_turnEncoder.getAbsolutePosition();
 
     SmartDashboard.putNumber("m_turningRadians", m_turningRadians);
-    SmartDashboard.putNumber("Turning Degrees", m_turnEncoder.getPosition());
+    SmartDashboard.putNumber("Turning Degrees", m_turnEncoder.getAbsolutePosition());
 
     //Optimize the reference state to avoid spinning further than 90 degrees
     SwerveModuleState state = 

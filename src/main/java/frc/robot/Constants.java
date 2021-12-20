@@ -111,7 +111,7 @@ public final class Constants {
         //     // Assumes the encoders are on a 1:1 reduction with the module shaft.
         //     (2 * Math.PI) / (double) kTurningFalconEncoderCPR;
     
-        public static final double kPModuleTurningController = 5.2; // FIXME kp Turning
+        public static final double kPModuleTurningController = .3; // FIXME kp Turning
         public static final double kDModuleTurningController = .1; // FIXME kD Turning
     
         public static final double kPModuleDriveController = 3; // FIXME kp driving
