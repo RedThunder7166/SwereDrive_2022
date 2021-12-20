@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
@@ -12,6 +13,9 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -32,12 +36,15 @@ public class SwerveModule extends SubsystemBase {
   private final PIDController m_drivePIDController = 
     new PIDController(ModuleConstants.kPModuleDriveController, 0, 0);
   
+
+  ShuffleboardTab PIDtab = Shuffleboard.getTab("PID Tuning");
+
   //Using a TrapezoidProfile PIDController to allow for smooth turning
   private final ProfiledPIDController m_turningPidController = 
     new ProfiledPIDController(
-      ModuleConstants.kPModuleTurningController,
+      ModuleConstants.kPModuleTurningController, 
       0,
-      0,
+      ModuleConstants.kDModuleTurningController,
       new TrapezoidProfile.Constraints(
           ModuleConstants.kMaxModuleAngularSpeedRadiansPerSecond,
           ModuleConstants.kMaxModuleAngularAccelerationRadiansPerSecondSquared));
@@ -48,7 +55,8 @@ public class SwerveModule extends SubsystemBase {
       int driveMotorChannel,
       int turningMotorChannel,
       int turningEncoderPorts,
-      double angleZero) {
+      double angleZero,
+      ShuffleboardLayout container) {
     
     // Initialize the motors
     m_driveMotor = new WPI_TalonFX(driveMotorChannel);
@@ -60,6 +68,14 @@ public class SwerveModule extends SubsystemBase {
     this.m_turnEncoder = new CANCoder(turningEncoderPorts);
     this.m_turnEncoder.configMagnetOffset(-angleZero);
 
+    
+  }
+
+  public double getModuleHeading(SwerveModule module){
+    double m_turningRadians =  
+    ((2*Math.PI)/360) * m_turnEncoder.getPosition();
+
+    return this.m_turnEncoder.getPosition() * m_turningRadians;
   }
 
   //Returns the current state of the module

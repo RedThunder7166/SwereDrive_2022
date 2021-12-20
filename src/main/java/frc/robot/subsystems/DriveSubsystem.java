@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,6 +21,7 @@ import frc.robot.Constants.DriveConstants;
 public class DriveSubsystem extends SubsystemBase {
 
   private ShuffleboardTab swerveTab = Shuffleboard.getTab("SDS Swerve");
+  private ShuffleboardTab moduleTab = Shuffleboard.getTab("Module Info");
 
   private NetworkTableEntry xSpeedEntry = 
   swerveTab.add("xBox xSpeed", 0)
@@ -45,33 +47,48 @@ public class DriveSubsystem extends SubsystemBase {
   swerveTab.add("Gyro Heading", 0)
           .getEntry();
 
+
   private final SwerveModule m_frontLeft = 
     new SwerveModule(
       DriveConstants.kFrontLeftDriveMotorPort,
       DriveConstants.kFrontLeftTurningMotorPort,
       DriveConstants.kFrontLeftTurningEncoderPorts,
-      DriveConstants.kFrontLeftAngleZero);
+      DriveConstants.kFrontLeftAngleZero,
+      moduleTab.getLayout("Front Left Module", BuiltInLayouts.kList)
+      .withSize(2, 4)
+      .withPosition(0, 0));
 
   private final SwerveModule m_rearLeft =
     new SwerveModule(
       DriveConstants.kRearLeftDriveMotorPort, 
       DriveConstants.kRearLeftTurningMotorPort, 
       DriveConstants.kRearLeftTurningEncoderPorts,
-      DriveConstants.kRearLeftAngleZero);
+      DriveConstants.kRearLeftAngleZero,
+      moduleTab.getLayout("Rear Left Module", BuiltInLayouts.kList)
+      .withSize(2, 4)
+      .withPosition(2, 0));
 
   private final SwerveModule m_frontRight = 
     new SwerveModule(
       DriveConstants.kFrontRightDriveMotorPort, 
       DriveConstants.kFrontRightTurningMotorPort, 
       DriveConstants.kFrontRightTurningEncoderPorts,
-      DriveConstants.kFrontRightAngleZero);
+      DriveConstants.kFrontRightAngleZero,
+      moduleTab.getLayout("Front Right Module", BuiltInLayouts.kList)
+      .withSize(2, 4)
+      .withPosition(4, 0));
 
   private final SwerveModule m_rearRight = 
     new SwerveModule(
       DriveConstants.kRearRightDriveMotorPort, 
       DriveConstants.kRearRightTurningMotorPort, 
       DriveConstants.kRearRightTurningEncoderPorts,
-      DriveConstants.kRearRightAngleZero);
+      DriveConstants.kRearRightAngleZero,
+      moduleTab.getLayout("Rear Right Module", BuiltInLayouts.kList)
+      .withSize(2, 4)
+      .withPosition(6, 0));
+
+ 
 
   // Initializing the gyro sensor
   private final Gyro m_gyro = new ADXRS450_Gyro();
@@ -138,7 +155,6 @@ public class DriveSubsystem extends SubsystemBase {
     rotEntry.setDouble(rot);
     frontLeftStateEntry.setDouble(swerveModuleStates[0].speedMetersPerSecond);
     frontRightStateEntry.setDouble(swerveModuleStates[1].speedMetersPerSecond);
-
 
   }
 
