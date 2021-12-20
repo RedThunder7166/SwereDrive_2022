@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
@@ -148,6 +149,11 @@ public class DriveSubsystem extends SubsystemBase {
     m_frontRight.setDesiredState(swerveModuleStates[1]);
     m_rearLeft.setDesiredState(swerveModuleStates[2]);
     m_rearRight.setDesiredState(swerveModuleStates[3]); 
+
+    SmartDashboard.putNumber("Front left", m_frontLeft.getModuleHeading());
+    SmartDashboard.putNumber("Front Right", m_frontRight.getModuleHeading());
+    SmartDashboard.putNumber("Rear Left", m_rearLeft.getModuleHeading());
+    SmartDashboard.putNumber("Rear Right", m_rearRight.getModuleHeading());
 
     // Telemetry
     xSpeedEntry.setDouble(xSpeed);

@@ -72,18 +72,17 @@ public class SwerveModule extends SubsystemBase {
 
     
     // Configure the encoders for both motors
+    
     m_driveMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
     this.m_turnEncoder = new CANCoder(turningEncoderPorts);
-    this.m_turnEncoder.configMagnetOffset(-angleZero);
+    this.m_turnEncoder.configMagnetOffset(-1 * angleZero);
 
-    
   }
 
-  public double getModuleHeading(SwerveModule module){
-    double m_turningRadians =  
-    ((2*Math.PI)/360) * m_turnEncoder.getPosition();
+  public double getModuleHeading(){
+    double m_turning = this.m_turnEncoder.getAbsolutePosition();
 
-    return this.m_turnEncoder.getPosition() * m_turningRadians;
+    return m_turning;
   }
 
   //Returns the current state of the module

@@ -36,7 +36,7 @@ public final class Constants {
         public static final int kFrontRightTurningEncoderPorts = 13;
         public static final int kRearRightTurningEncoderPorts = 15;
 
-        public static final double kFrontLeftAngleZero = -173.1; // FIXME: Add angle offset
+        public static final double kFrontLeftAngleZero = 353.1; // FIXME: Add angle offset
         public static final double kRearLeftAngleZero = 78.8; // FIXME: Add angle offset
         public static final double kFrontRightAngleZero = 331.6; // FIXME: Add angle offset
         public static final double kRearRightAngleZero = 323.7; // FIXME: Add angle offset
