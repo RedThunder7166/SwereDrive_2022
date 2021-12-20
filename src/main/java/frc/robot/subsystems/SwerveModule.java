@@ -11,6 +11,7 @@ import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -19,6 +20,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
 
 public class SwerveModule extends SubsystemBase {
@@ -48,6 +50,12 @@ public class SwerveModule extends SubsystemBase {
       new TrapezoidProfile.Constraints(
           ModuleConstants.kMaxModuleAngularSpeedRadiansPerSecond,
           ModuleConstants.kMaxModuleAngularAccelerationRadiansPerSecondSquared));
+
+  SimpleMotorFeedforward driveFeedforward = new SimpleMotorFeedforward(
+    DriveConstants.ksVolts, DriveConstants.kvVoltSecondsPerMeter);
+
+  SimpleMotorFeedforward turnFeedForward = new SimpleMotorFeedforward(
+    DriveConstants.ksTurning, DriveConstants.kvTurning);
 
 
   /** Creates a new SwerveModule. **/
@@ -112,7 +120,8 @@ public class SwerveModule extends SubsystemBase {
 
     //Calculate the drive output from the drive PID controller
     final double driveOutput =
-      m_drivePIDController.calculate(m_speedMetersPerSecond, state.speedMetersPerSecond);
+      m_drivePIDController.calculate(m_speedMetersPerSecond, state.speedMetersPerSecond)
+      + driveFeedforward.calculate(state.speedMetersPerSecond);
 
     final var turnOutput = 
       m_turningPidController.calculate(m_turningRadians, state.angle.getRadians());
@@ -123,6 +132,8 @@ public class SwerveModule extends SubsystemBase {
 
     SmartDashboard.putNumber("PID driveOutput", driveOutput);
     SmartDashboard.putNumber("PID turnOutput", turnOutput);
+    SmartDashboard.putNumber("Feedforward", driveFeedforward.calculate(desiredState.speedMetersPerSecond));
+    SmartDashboard.putNumber("PID Output", m_drivePIDController.calculate(m_speedMetersPerSecond, state.speedMetersPerSecond));
 
 
 

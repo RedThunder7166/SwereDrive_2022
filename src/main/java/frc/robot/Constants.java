@@ -80,7 +80,11 @@ public final class Constants {
         public static final double kvVoltSecondsPerMeter = 2.73;
         public static final double kaVoltSecondsSquaredPerMeter = 0.124;
         public static final double kMaxSpeedMetersPerSecond = 4.11;
+
+        public static final double ksTurning = 0; // FIXME feedforward turning
+        public static final double kvTurning = 0;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI * 2;
+
       }
     
       public static final class ModuleConstants {
