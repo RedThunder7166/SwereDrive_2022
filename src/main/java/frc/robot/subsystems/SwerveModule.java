@@ -42,7 +42,7 @@ public class SwerveModule extends SubsystemBase {
   ShuffleboardTab PIDtab = Shuffleboard.getTab("PID Tuning");
 
   //Using a TrapezoidProfile PIDController to allow for smooth turning
-  private final ProfiledPIDController m_turningPidController = 
+  private final ProfiledPIDController m_turningPIDController = 
     new ProfiledPIDController(
       ModuleConstants.kPModuleTurningController, 
       0,
@@ -122,9 +122,10 @@ public class SwerveModule extends SubsystemBase {
       m_drivePIDController.calculate(m_speedMetersPerSecond, state.speedMetersPerSecond)
       + driveFeedforward.calculate(state.speedMetersPerSecond);
 
+
     final var turnOutput = 
-      m_turningPidController.calculate(m_turningRadians, state.angle.getRadians()
-      + turnFeedForward.calculate(state.angle.getRadians()));
+      m_turningPIDController.calculate(m_turningRadians, state.angle.getRadians())
+      + turnFeedForward.calculate(m_turningPIDController.getSetpoint().velocity);
 
     // Calculate the turning motor output from the turning PID controller
     m_driveMotor.setVoltage(driveOutput); 
