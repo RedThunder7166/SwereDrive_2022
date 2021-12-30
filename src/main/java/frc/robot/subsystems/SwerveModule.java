@@ -125,12 +125,14 @@ public class SwerveModule extends SubsystemBase {
 
     final var turnOutput = 
       m_turningPIDController.calculate(m_turningRadians, state.angle.getRadians())
-      + turnFeedForward.calculate(m_turningPIDController.getSetpoint().velocity);
+      + turnFeedForward.calculate(m_turningPIDController.getSetpoint().velocity)
+      ;
 
     // Calculate the turning motor output from the turning PID controller
     m_driveMotor.setVoltage(driveOutput); 
     m_turningMotor.setVoltage(turnOutput);
 
+    SmartDashboard.putNumber("turnPID Setpoint V", m_turningPIDController.getSetpoint().velocity);
     SmartDashboard.putNumber("PID driveOutput", driveOutput);
     SmartDashboard.putNumber("PID turnOutput", turnOutput);
     SmartDashboard.putNumber("Feedforward", driveFeedforward.calculate(desiredState.speedMetersPerSecond));
@@ -139,6 +141,7 @@ public class SwerveModule extends SubsystemBase {
 
 
   }
+
 
   public void resetEncoders() {
     m_turnEncoder.setPosition(0);

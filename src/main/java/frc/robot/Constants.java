@@ -81,8 +81,8 @@ public final class Constants {
         public static final double kaVoltSecondsSquaredPerMeter = 0.124;
         public static final double kMaxSpeedMetersPerSecond = 2;
 
-        public static final double ksTurning = .742; // FIXME feedforward turning
-        public static final double kvTurning = .216;
+        public static final double ksTurning = 0.742; // FIXME feedforward turning
+        public static final double kvTurning = 0.216;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI * 2;
 
       }
@@ -90,8 +90,8 @@ public final class Constants {
       public static final class ModuleConstants {
         // Drive motor -> FX Encoder (2048 units)
         // Turning motor -> CTRE CANcoder (4096 units)
-        public static final double kMaxModuleAngularSpeedRadiansPerSecond = 6 * Math.PI;
-        public static final double kMaxModuleAngularAccelerationRadiansPerSecondSquared = 6 * Math.PI;
+        public static final double kMaxModuleAngularSpeedRadiansPerSecond = 2 * Math.PI;
+        public static final double kMaxModuleAngularAccelerationRadiansPerSecondSquared = 2 * Math.PI;
         public static final double kDriveGearRatio = 8.14;
         public static final double kTurningGearRatio = 12.8;
 
@@ -111,8 +111,8 @@ public final class Constants {
         //     // Assumes the encoders are on a 1:1 reduction with the module shaft.
         //     (2 * Math.PI) / (double) kTurningFalconEncoderCPR;
     
-        public static final double kPModuleTurningController = .5; // FIXME kp Turning
-        public static final double kDModuleTurningController = .1; // FIXME kD Turning
+        public static final double kPModuleTurningController = .1; // FIXME kp Turning
+        public static final double kDModuleTurningController = 0; // FIXME kD Turning
     
         public static final double kPModuleDriveController = 3; // FIXME kp driving
       }
@@ -125,7 +125,7 @@ public final class Constants {
         public static final double kMaxSpeedMetersPerSecond = 3;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
-        public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
+        public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Math.PI;
     
         public static final double kPXController = .2;
         public static final double kPYController = .2;
@@ -134,6 +134,6 @@ public final class Constants {
         // Constraint for the motion profilied robot angle controller
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
             new TrapezoidProfile.Constraints(
-                kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+                kMaxAngularSpeedRadiansPerSecond, kMaxAngularAccelerationRadiansPerSecondSquared);
       }
 }
