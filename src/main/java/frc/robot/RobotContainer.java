@@ -61,8 +61,8 @@ public class RobotContainer {
             modifyAxis(m_driverController.getX(GenericHID.Hand.kLeft)) // yAxis
             * DriveConstants.kMaxSpeedMetersPerSecond * -1, 
             modifyAxis(m_driverController.getX(GenericHID.Hand.kRight)) // rot
-            * DriveConstants.kMaxSpeedMetersPerSecond * -1, 
-            false),
+            * DriveConstants.kMaxRotationalSpeedMetersPerSecond * -1, 
+            true),
             
         m_robotDrive));
 
@@ -152,7 +152,7 @@ public class RobotContainer {
 
   private static double modifyAxis(double value) {
     // Deadband
-    value = deadband(value, 0.05);
+    value = deadband(value, 0.1);
 
     // Square the axis
     value = Math.copySign(value * value, value);

@@ -133,7 +133,7 @@ public class SwerveModule extends SubsystemBase {
       ;
 
     // Calculate the turning motor output from the turning PID controller
-    m_driveMotor.setVoltage(0); 
+    m_driveMotor.setVoltage(driveOutput); 
     m_turningMotor.setVoltage(turnOutput);
 
     SmartDashboard.putNumber("turnPID Setpoint V", m_turningPIDController.getSetpoint().velocity);
