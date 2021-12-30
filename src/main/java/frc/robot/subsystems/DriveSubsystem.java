@@ -150,10 +150,10 @@ public class DriveSubsystem extends SubsystemBase {
     m_rearLeft.setDesiredState(swerveModuleStates[2]);
     m_rearRight.setDesiredState(swerveModuleStates[3]); 
 
-    SmartDashboard.putNumber("Front left", m_frontLeft.getModuleHeading());
-    SmartDashboard.putNumber("Front Right", m_frontRight.getModuleHeading());
-    SmartDashboard.putNumber("Rear Left", m_rearLeft.getModuleHeading());
-    SmartDashboard.putNumber("Rear Right", m_rearRight.getModuleHeading());
+    SmartDashboard.putNumber("FL Mod Heading", m_frontLeft.getModuleHeading());
+    SmartDashboard.putNumber("FR Mod Heading", m_frontRight.getModuleHeading());
+    SmartDashboard.putNumber("RL Mod Heading", m_rearLeft.getModuleHeading());
+    SmartDashboard.putNumber("RR Mod Heading", m_rearRight.getModuleHeading());
 
     // Telemetry
     xSpeedEntry.setDouble(xSpeed);

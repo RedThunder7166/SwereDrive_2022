@@ -61,8 +61,8 @@ public class RobotContainer {
             modifyAxis(m_driverController.getX(GenericHID.Hand.kLeft)) // yAxis
             * DriveConstants.kMaxSpeedMetersPerSecond * -1, 
             modifyAxis(m_driverController.getX(GenericHID.Hand.kRight)) // rot
-            * DriveConstants.kMaxAngularSpeedRadiansPerSecond * -1, 
-            true),
+            * DriveConstants.kMaxSpeedMetersPerSecond * -1, 
+            false),
             
         m_robotDrive));
 
