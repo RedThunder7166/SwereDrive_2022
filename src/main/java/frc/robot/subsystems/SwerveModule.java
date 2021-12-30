@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -50,6 +51,7 @@ public class SwerveModule extends SubsystemBase {
       new TrapezoidProfile.Constraints(
           ModuleConstants.kMaxModuleAngularSpeedRadiansPerSecond,
           ModuleConstants.kMaxModuleAngularAccelerationRadiansPerSecondSquared));
+  
 
   SimpleMotorFeedforward driveFeedforward = new SimpleMotorFeedforward(
     DriveConstants.ksVolts, DriveConstants.kvVoltSecondsPerMeter);
@@ -76,6 +78,9 @@ public class SwerveModule extends SubsystemBase {
     m_driveMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
     this.m_turnEncoder = new CANCoder(turningEncoderPorts);
     this.m_turnEncoder.configMagnetOffset(-1 * angleZero);
+    this.m_turnEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
+
+    m_turningPIDController.enableContinuousInput(-Math.PI, Math.PI);
 
   }
 
@@ -103,7 +108,6 @@ public class SwerveModule extends SubsystemBase {
       ModuleConstants.kDrivetoMetersPerSecond * m_driveMotor.getSelectedSensorVelocity();
     
     SmartDashboard.putNumber("m_speedMetersPerSecond", m_speedMetersPerSecond);
-    SmartDashboard.putNumber("Falcon SelectedSensorVelocity", m_driveMotor.getSelectedSensorVelocity());
 
     double m_turningRadians =  
       ((2*Math.PI)/360) * m_turnEncoder.getAbsolutePosition();
@@ -129,7 +133,7 @@ public class SwerveModule extends SubsystemBase {
       ;
 
     // Calculate the turning motor output from the turning PID controller
-    m_driveMotor.setVoltage(driveOutput); 
+    m_driveMotor.setVoltage(0); 
     m_turningMotor.setVoltage(turnOutput);
 
     SmartDashboard.putNumber("turnPID Setpoint V", m_turningPIDController.getSetpoint().velocity);
